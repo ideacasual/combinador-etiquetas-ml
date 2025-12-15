@@ -48,7 +48,17 @@ document.addEventListener("DOMContentLoaded", function () {
     fileInput.addEventListener("change", handleFileSelect);
 
     // Browse button click
-    browseBtn.addEventListener("click", () => fileInput.click());
+    browseBtn.addEventListener("click", async function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Force a user gesture recognition
+      if (e.isTrusted) {
+        // Use a promise-based approach
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        fileInput.click();
+      }
+    });
 
     // Clear files button
     if (clearFilesBtn) {
